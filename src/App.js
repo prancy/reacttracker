@@ -31,6 +31,13 @@ class App extends Component {
     })
   }
 
+  removeTodo = (index) => {
+    //everytime you call this.setState, it is reexecuting the render()
+    this.setState((prevState) => ({
+      todos: prevState.todos.filter((item, idx) => idx !== index)
+    }))
+    }
+
   render() {
     return (
       <div>
@@ -40,15 +47,15 @@ class App extends Component {
                     inputFieldText={this.state.inputFieldText}
                     handleNewSubmit={this.handleNewSubmit}
           />
-        <TodoListItems todoItems={this.state.todos} />
+        <TodoListItems todoItems={this.state.todos} removeTodo={this.removeTodo} />
       </div>
     )
   }
 }
 
-const TodoListItems = ({ todoItems }) => (
+const TodoListItems = ({ todoItems, removeTodo }) => (
   <ul>
-    {todoItems.map((item, index) => <li key ={index}>{item}</li>)}
+    {todoItems.map((item, index) => <li onClick={ () => removeTodo(index) } key={index}>{item}</li>)}
   </ul>
 )
 
